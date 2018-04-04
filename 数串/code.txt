@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+/**
+ * Test01.java 题目描述 设有n个正整数，将他们连接成一排，组成一个最大的多位整数。
+ * 如:n=3时，3个整数13,312,343,连成的最大整数为34331213。
+ * 如:n=4时,4个整数7,13,4,246连接成的最大整数为7424613。
+ * 输入描述:有多组测试样例，每组测试样例包含两行，第一行为一个整数N（N<=100），第二行包含N个数(每个数不超过1000，空格分开)。
+ * 输出描述:每组数据输出一个表示最大的整数。
+ * @author anyunpei 2018年3月28日下午10:37:10 数串编程
+ */
+public class Test01 {
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);// 使用scanner方法，控制台传入字符串
+		String inputline1 = input.nextLine();// 输入第一行
+		String inputline2 = input.nextLine();// 输入第二行
+		int i = Integer.parseInt(inputline1);// 字符串转int
+		test01(i, inputline2);// 调用方法
+
+	}
+
+	public static void test01(int inputLine1, String inputLine2) {
+		// 创建一个容量为inputLine1大小的字符串数组。
+		String[] inputStrArray = new String[inputLine1];
+		int normalLink = 0;
+		int reverseLink = 0;
+		String temp = null;
+		inputStrArray = inputLine2.split(" ");
+		/**
+		 * 循环比较 inputStrArray[j] + inputStrArray[j + 1] 与 inputStrArray[j + 1] +
+		 * inputStrArray[j] 谁比较大 若j+（j+1）大，不用交换字符串 若（j+1）+j大，交换字符串
+		 */
+		for (int i = inputStrArray.length - 1; i > 0; --i) {
+			for (int j = 0; j < i; ++j) {
+				/**
+				 * 把inputStrArray[j] + inputStrArray[j + 1]前后相邻的字符串连接起来，再转换成int
+				 * normalLink。正常链接。 把inputStrArray[j + 1] +
+				 * inputStrArray[j]前后相邻的字符串连接起来，再转换成int reverseLink。反向链接。
+				 */
+				normalLink = Integer.parseInt(inputStrArray[j] + inputStrArray[j + 1]);
+				reverseLink = Integer.parseInt(inputStrArray[j + 1] + inputStrArray[j]);
+				/**
+				 * 两个正反连接起来的整数 相比 ，若正向连接比反向连接小（反向连接更大），因为题目要求需要大的在前面，因此交换前后数组。
+				 */
+				if (normalLink < reverseLink) {
+					temp = inputStrArray[j];
+					inputStrArray[j] = inputStrArray[j + 1];
+					inputStrArray[j + 1] = temp;
+				}
+			}
+		}
+		/**
+		 * 按排好的字符串不换行输出
+		 */
+		for (int i = 0; i < inputStrArray.length; i++) {
+			System.out.print(inputStrArray[i]);
+		}
+
+	}
+}
