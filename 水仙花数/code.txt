@@ -1,0 +1,59 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * TestFlowerShuiXianNumber.java
+ * 
+ * @author anyunpei 2018年4月4日下午5:41:40 题目描述
+ *         春天是鲜花的季节，水仙花就是其中最迷人的代表，数学上有个水仙花数，他是这样定义的：
+ *         “水仙花数”是指一个三位数，它的各位数字的立方和等于其本身，比如：153=1^3+5^3+3^3。
+ *         现在要求输出所有在m和n范围内的水仙花数。 输入描述:
+ * 
+ *         输入数据有多组，每组占一行，包括两个整数m和n（100 ≤ m ≤ n ≤ 999）。
+ * 
+ *         输出描述:
+ * 
+ *         对于每个测试实例，要求输出所有在给定范围内的水仙花数，就是说，输出的水仙花数必须大于等于m,并且小于等于n，如果有多个，
+ *         则要求从小到大排列在一行内输出，之间用一个空格隔开; 如果给定的范围内不存在水仙花数，则输出no; 每个测试实例的输出占一行。
+ */
+public class TestFlowerShuiXianNumber {
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		int start = input.nextInt();
+		int end = input.nextInt();// 系统输入两个整数
+		ArrayList<Integer> out = flower(start, end);// 调用方法
+		if (out.isEmpty()) {// 判断是否为空，按格式输出no。
+			System.out.println("no");
+		} else {
+			for (int i = 0; i < out.size(); i++) {// 按格式输出
+				if (i != out.size() - 1) {// 最后一个不需要输出空格
+					System.out.print(out.get(i) + " ");
+				} else {
+					System.out.print(out.get(i));
+				}
+			}
+		}
+
+	}
+
+	public static ArrayList<Integer> flower(int startNumber, int endNumebr) {
+
+		ArrayList<Integer> flowerNumber = new ArrayList<Integer>();
+		int j = 0;
+		for (int i = startNumber; i < endNumebr; i++) {
+			/*
+			 * 若满足条件放入数组 条件是分别取出3个位的数的3次方相加==原数
+			 */
+			if ((i == Math.pow(Math.floor(i / 100), 3)//取百位
+					+ Math.pow(Math.floor(i % 100 / 10), 3)//取十位
+					+ Math.pow(i % 100 % 10, 3)//取个位
+					)) {
+
+				flowerNumber.add(i);
+
+			}
+		}
+		return flowerNumber;// 返回数组
+	}
+
+}
