@@ -1,0 +1,26 @@
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.TreeSet;
+//别人的代码
+//使用TreeSet 很高效
+public class StringUtil {
+ 
+    //集合
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        TreeSet<Integer> set = new TreeSet<Integer>();
+        while(in.hasNext()){
+            int m = in.nextInt();
+            int n = in.nextInt();
+            for(int i=1; i<=m+n; i++){
+                set.add(in.nextInt());
+            }
+            Iterator<Integer> it = set.iterator();
+            while(it.hasNext()){
+                System.out.print(it.next());
+                if(it.hasNext())
+                    System.out.print(" ");
+            }
+        }
+    }
+}
