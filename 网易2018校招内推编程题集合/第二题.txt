@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+/**
+ * Test02NE.java
+ * 
+ * @author anyunpei 2018年4月12日下午5:18:37 如果一个数列S满足对于所有的合法的i,都有S[i + 1] = S[i] +
+ *         d, 这里的d也可以是负数和零,我们就称数列S为等差数列。
+ *         小易现在有一个长度为n的数列x,小易想把x变为一个等差数列。小易允许在数列上做交换任意两个位置的数值的操作,并且交换操作允许交换多次。
+ *         但是有些数列通过交换还是不能变成等差数列,小易需要判别一个数列是否能通过交换操作变成等差数列 输入描述:
+ * 
+ *         输入包括两行,第一行包含整数n(2 ≤ n ≤ 50),即数列的长度。 第二行n个元素x[i](0 ≤ x[i] ≤
+ *         1000),即数列中的每个整数。
+ *         输出描述:
+ *         如果可以变成等差数列输出"Possible",否则输出"Impossible"。
+ *         输入例子1:
+ *         3 3 1 2
+ *         输出例子1:
+ *         Possible
+ */
+public class NETest02_IfAllGap {
+	public static void main(String[] args) {
+		//循环系统输入，构造数组
+		Scanner in = new Scanner(System.in);
+		int length = in.nextInt();//第一位为数组长度
+		int[] a = new int[length];
+		for (int i = 0; i < length; i++) {
+			a[i] = in.nextInt();
+		}
+		//输出是否可为等差数列
+		System.out.println(yesOrNo(a));
+	}
+	/*
+	 * 判断是否为等差数列
+	 * */
+	public static String yesOrNo(int[] a) {
+		int[] b = bubbleSort(a);//先排序
+		int difference = b[1] - b[0];//算出 等差值
+		for (int i = 0; i < b.length-1; i++) {
+			
+				if (b[i + 1] - b[i] == difference) {//循环判断相邻两位差值 等于 等差值
+					continue;
+				} else {
+					return "Impossible";
+				}
+			
+		}
+		return "Possible";
+	}
+	/*
+	 * 冒泡排序
+	 * */
+	public static int[] bubbleSort(int[] a) {
+		int temp;
+		for (int i = a.length - 1; i > 0; --i) {
+			for (int j = 0; j < i; ++j) {
+				if (a[j + 1] < a[j]) {
+					temp = a[j];
+					a[j] = a[j + 1];
+					a[j + 1] = temp;
+				}
+			}
+		}
+		return a;
+	}
+}

@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+/**
+ * Test03NE.java
+ * 
+ * @author anyunpei 2018年4月12日下午6:04:20
+ *         如果一个01串任意两个相邻位置的字符都是不一样的,我们就叫这个01串为交错01串。例如:
+ *         "1","10101","0101010"都是交错01串。
+ *         小易现在有一个01串s,小易想找出一个最长的连续子串,并且这个子串是一个交错01串。小易需要你帮帮忙求出最长的这样的子串的长度是多少。
+ *         输入描述:
+ * 
+ *         输入包括字符串s,s的长度length(1 ≤ length ≤ 50),字符串中只包含'0'和'1'
+ *         输出描述:
+ * 
+ *         输出一个整数,表示最长的满足要求的子串长度。
+ *         输入例子1:
+ *         111101111
+ *         输出例子1:
+ *         3
+ *         输入例子1:
+ *         111111111
+ *         输出例子1:
+ *         1
+ */
+public class NETest03_01Length {
+	public static void main(String[] args) {
+
+		// 系统输入字符串
+		Scanner in = new Scanner(System.in);
+		String input = in.nextLine();
+		System.out.print(length(input));
+
+	}
+
+	/*
+	 * length为最长01子串长度 lenght2为循环中当前发现的01子串长度 主要思想是循环判断相邻的两数是否相等，
+	 * 第一种可能：若遇到不相等就是10或01，那么计数length2。
+	 * 关键：如果length2大于length，那么说明当前发现的子串为最长子串。length2赋值给length。
+	 * 第二种可能：当遇到相等的相邻两数说明是11或00，跳过本次循环，开始判断下一对相邻的数。
+	 * 关键：因为当前遇到了相等的数，11或00，因此之前遇到的01子串已经完结。
+	 * 因此当前01字串长度length2需清0，重新计数新遇到的“符合的01字串”长度。
+	 */
+	public static int length(String input) {
+		String[] subStr = input.split("");
+		int length = 0;// 最长01子串计数器
+		int length2 = 0;// 当前01子串计数器
+		for (int i = 0; i < subStr.length - 1; i++) {
+			// 遇到01或10，当前子串计数器加1。
+			if (!subStr[i].equals(subStr[i + 1])) {
+				length2++;
+				if (length < length2) {// 当length2超过length值，刷新length值使他保持最大。
+					length = length2;
+				}
+
+			}
+			// 遇到11或00，当前子串计数器清0
+			else if (subStr[i].equals(subStr[i + 1])) {
+				length2 = 0;
+				continue;// 开始下次循环
+			}
+		}
+		return length + 1;// 加1的原因是，length其实是计算遇到不同的次数，而最长01子串长度比次数大1.
+
+	}
+}
